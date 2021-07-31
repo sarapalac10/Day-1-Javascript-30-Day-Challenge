@@ -10,16 +10,76 @@
 <body>
     
     <div class="keys">
-        <div data-key="xx" class="key">
+        <div data-key="65" class="key">
             <kbd>A</kbd>
+            <span class="sound">Clap</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">Hihat</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">Kick</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">Openhat</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">Boom</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">Ride</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">Snare</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">Tom</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">Tink</span>
         </div>
     </div>
+
+    <audio data-key="65" src="sounds/Clap.wav"></audio>
+    <audio data-key="83" src="sounds/Hihat.wav"></audio>
+    <audio data-key="68" src="sounds/Kick.wav"></audio>
+    <audio data-key="70" src="sounds/Openhat.wav"></audio>
+    <audio data-key="71" src="sounds/Boom.wav"></audio>
+    <audio data-key="72" src="sounds/Ride.wav"></audio>
+    <audio data-key="74" src="sounds/Snare.wav"></audio>
+    <audio data-key="75" src="sounds/Tom.wav"></audio>
+    <audio data-key="76" src="sounds/Tink.wav"></audio>
+
 </body>
 
 <script>
-    window.addEventListener('keydown',function(e) {
-        console.log(e)
-    });
+
+    function playSound(e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if(!audio) return; //To stop the function
+        audio.currentTime = 0; //To rewind every time the function is called
+        audio.play();
+        key.classList.add('playing')};
+
+function removeTransition(e){
+    if (e.propertyName !== 'transform') return;
+    this.classList.remove('playing');
+}
+
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown',playSound);
+
 </script>
 
 </html>
